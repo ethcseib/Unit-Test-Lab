@@ -1,4 +1,9 @@
-﻿using System;
+﻿/*Ethan Seiber
+ * Date: 4/10/2019
+ * File: Class1.cs
+ * Description: Contains the BankAccountNS class and its implementations
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +16,10 @@ namespace BankAccountNS
     /// </summary>   
     public class BankAccount
     {
+        // class under test  
+        public const string DebitAmountExceedsBalanceMessage = "Debit amount exceeds balance";
+        public const string DebitAmountLessThanZeroMessage = "Debit amount less than zero";
+
         private string m_customerName;
 
         private double m_balance;
@@ -39,6 +48,7 @@ namespace BankAccountNS
 
         public void Debit(double amount)
         {
+
             if (m_frozen)
             {
                 throw new Exception("Account frozen");
@@ -46,15 +56,16 @@ namespace BankAccountNS
 
             if (amount > m_balance)
             {
-                throw new ArgumentOutOfRangeException("amount");
+                throw new ArgumentOutOfRangeException("amount", amount, DebitAmountExceedsBalanceMessage);
             }
 
             if (amount < 0)
             {
-                throw new ArgumentOutOfRangeException("amount");
+                throw new ArgumentOutOfRangeException("amount", amount, DebitAmountLessThanZeroMessage);
             }
+            // ... 
 
-            m_balance += amount; // intentionally incorrect code  
+            m_balance -= amount; // intentionally incorrect code //was += 
         }
 
         public void Credit(double amount)
